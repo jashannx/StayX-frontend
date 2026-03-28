@@ -57,7 +57,7 @@ const handleLogout = () => {
               Host Your Stay
             </Link>
 
-            {cookies.token && (
+            {localStorage.getItem("isAuth") && (
               <button className="btn btn-pill btn-logout" onClick={handleLogout}>
                 Logout
               </button>
