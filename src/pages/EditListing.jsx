@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../lib/api";
 
 export default function EditListing() {
   const { id } = useParams();
@@ -20,8 +20,8 @@ export default function EditListing() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/listings/${id}`)
+    api
+      .get(`/listings/${id}`)
       .then((res) => {
         const data = res.data;
         setFormData({
@@ -63,8 +63,7 @@ export default function EditListing() {
         payload.append("image", formData.image);
       }
 
-      await axios.put(`http://localhost:3001/listings/${id}`, payload, {
-        withCredentials: true,
+      await api.put(`/listings/${id}`, payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

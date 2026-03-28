@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
+import api from "../lib/api";
 
 export default function ProtectedRoute({ children }) {
   const [cookies] = useCookies(["token"]);
@@ -15,11 +15,7 @@ export default function ProtectedRoute({ children }) {
       }
 
       try {
-        const { data } = await axios.post(
-          "http://localhost:3001/auth/verify",
-          {},
-          { withCredentials: true }
-        );
+        const { data } = await api.post("/auth/verify", {});
 
         setIsAuth(data.status);
       } catch (err) {

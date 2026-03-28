@@ -1,14 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import api from "./lib/api";
 
 export default function App() {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/listings")
+    api
+      .get("/listings")
       .then((res) => setListings(res.data))
       .catch((err) => console.log(err));
   }, []);

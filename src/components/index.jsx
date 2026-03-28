@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/api";
 
 const STAR_COUNT = 5;
 const STAR_ICON = "\u2605";
@@ -20,7 +20,7 @@ export default function Index() {
 
   const fetchListing = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/listings/${id}`, { withCredentials: true });
+      const res = await api.get(`/listings/${id}`);
       setListing(res.data);
     } catch (err) {
       console.log(err);
@@ -29,9 +29,7 @@ export default function Index() {
 
   const fetchCurrentUser = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3001/auth/verify", {
-        withCredentials: true,
-      });
+      const { data } = await api.get("/auth/verify");
       setCurrentUserId(data.user?._id ?? null);
     } catch (err) {
       setCurrentUserId(null);
@@ -63,7 +61,7 @@ export default function Index() {
 
     try {
       setIsSubmittingReview(true);
-      await axios.post(`http://localhost:3001/listings/${id}/reviews`, reviewForm,{ withCredentials: true });
+      await api.post(`/listings/${id}/reviews`, reviewForm);
       setReviewForm({
         rating: 5,
         comment: "",
@@ -82,7 +80,7 @@ export default function Index() {
     if (!confirmed) return;
 
     try {
-      await axios.delete(`http://localhost:3001/listings/${id}/reviews/${reviewId}`,{ withCredentials: true } );
+      await api.delete(`/listings/${id}/reviews/${reviewId}`);
       await fetchListing();
     } catch (err) {
       console.log(err);
@@ -96,7 +94,7 @@ export default function Index() {
 
     try {
       setIsDeleting(true);
-      await axios.delete(`http://localhost:3001/listings/${id}`,{ withCredentials: true });
+      await api.delete(`/listings/${id}`);
       navigate("/listings");
     } catch (err) {
       console.log(err);

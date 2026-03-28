@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../lib/api";
 
 export default function NewListing() {
   const navigate = useNavigate();
@@ -40,8 +40,7 @@ export default function NewListing() {
         payload.append("image", formData.image);
       }
 
-      const res = await axios.post("http://localhost:3001/listings", payload, {
-        withCredentials: true,
+      const res = await api.post("/listings", payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
