@@ -8,7 +8,7 @@ const rawApiBaseUrl =
 export const API_BASE_URL = rawApiBaseUrl.replace(/\/+$/, "");
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: "https://stayx-backend-c0yb.onrender.com/",
   withCredentials: true,
 });
 
