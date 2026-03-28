@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const DEFAULT_API_BASE_URL = "http://localhost:3001";
+const DEFAULT_API_BASE_URL = "https://stayx-backend-c0yb.onrender.com/";
 
 const rawApiBaseUrl =
   import.meta.env.VITE_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL;
