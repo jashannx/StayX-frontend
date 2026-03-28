@@ -139,6 +139,18 @@ img {
   font-weight: 700;
 }
 
+.btn-ghost {
+  background: rgba(255, 253, 248, 0.88);
+  color: #173c3a;
+  border: 1px solid rgba(23, 60, 58, 0.12);
+  box-shadow: 0 10px 24px rgba(34, 49, 48, 0.08);
+}
+
+.btn-ghost:hover {
+  background: #ffffff;
+  color: #173c3a;
+}
+
 .btn-create {
   background: linear-gradient(135deg, #173c3a, #2a6761);
   color: #fffdf7;
@@ -158,6 +170,12 @@ img {
 .btn-logout:hover {
   background: #efc9bd;
   color: #8b3726;
+}
+
+.navbar-guest-copy {
+  color: #61706d;
+  font-weight: 600;
+  margin-right: 0.25rem;
 }
 
 .hero-page,
@@ -510,6 +528,29 @@ img {
   margin-bottom: 1.4rem;
 }
 
+.auth-eyebrow-dark {
+  color: #ab4e38;
+}
+
+.auth-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.35rem;
+}
+
+.auth-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: #f8e7df;
+  color: #9a4934;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
 .auth-form {
   display: grid;
   gap: 1rem;
@@ -625,6 +666,10 @@ img {
 @media (max-width: 992px) {
   .navbar-search {
     min-width: 100%;
+  }
+
+  .navbar-guest-copy {
+    margin-right: 0;
   }
 
   .hero-grid,
