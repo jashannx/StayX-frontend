@@ -30,6 +30,10 @@ const Signup = () => {
 
       if (success) {
         toast.success(message);
+
+        // ✅ auto login after signup
+        localStorage.setItem("isAuth", "true");
+
         setTimeout(() => {
           navigate("/listings", { replace: true });
         }, 1000);
@@ -52,77 +56,40 @@ const Signup = () => {
     <div className="auth-page">
       <div className="auth-shell">
         <section className="auth-hero">
-          <span className="auth-eyebrow">Start hosting</span>
-          <h1>Build your hosting space with a stronger first impression.</h1>
-          <p className="auth-copy">
-            Join StayX to publish listings, manage edits, and shape a more premium
-            travel experience from day one.
-          </p>
-
-          <div className="auth-feature-list">
-            <div className="auth-feature">
-              <strong>Host-ready tools</strong>
-              <span>Create listings, upload photos, and manage updates without friction.</span>
-            </div>
-            <div className="auth-feature">
-              <strong>Guest-friendly presentation</strong>
-              <span>Showcase homes with a layout that feels warm, modern, and memorable.</span>
-            </div>
-            <div className="auth-feature">
-              <strong>One clean workflow</strong>
-              <span>Everything you need to launch confidently before deployment.</span>
-            </div>
-          </div>
+          <h1>Create Account</h1>
         </section>
 
         <section className="auth-card">
-          <span className="auth-eyebrow">Create account</span>
-          <h2>Sign up for StayX</h2>
-          <p className="auth-subcopy">
-            Create your account and start curating your next collection of stays.
-          </p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={inputValue.username}
+              onChange={handleOnChange}
+            />
 
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <label>
-              Username
-              <input
-                type="text"
-                name="username"
-                value={inputValue.username}
-                placeholder="Enter your username"
-                onChange={handleOnChange}
-              />
-            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={inputValue.email}
+              onChange={handleOnChange}
+            />
 
-            <label>
-              Email
-              <input
-                type="email"
-                name="email"
-                value={inputValue.email}
-                placeholder="Enter your email"
-                onChange={handleOnChange}
-              />
-            </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={inputValue.password}
+              onChange={handleOnChange}
+            />
 
-            <label>
-              Password
-              <input
-                type="password"
-                name="password"
-                value={inputValue.password}
-                placeholder="Create a password"
-                onChange={handleOnChange}
-              />
-            </label>
-
-            <button className="auth-submit" type="submit">
-              Create Account
-            </button>
+            <button type="submit">Signup</button>
           </form>
 
-          <p className="auth-footer">
-            Already have an account? <Link className="auth-link" to="/login">Login</Link>
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </section>
 

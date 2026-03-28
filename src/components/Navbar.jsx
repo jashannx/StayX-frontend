@@ -6,10 +6,10 @@ function Navbar() {
   const navigate = useNavigate();
   const [cookies, , removeCookie] = useCookies(["token"]);
 
-  const handleLogout = () => {
-    removeCookie("token");
-    navigate("/login", { replace: true });
-  };
+const handleLogout = () => {
+  localStorage.removeItem("isAuth");
+  navigate("/login");
+};
 
   return (
     <nav className="navbar navbar-expand-lg sticky-top main-navbar">

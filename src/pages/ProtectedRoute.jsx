@@ -1,38 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
 import api from "../lib/api";
 
 export default function ProtectedRoute({ children }) {
-  const [cookies] = useCookies(["token"]);
   const [isAuth, setIsAuth] = useState(null);
 
   useEffect(() => {
     const verify = async () => {
-      if (!cookies.token) {
-        setIsAuth(false);
-        return;
-      }
-
       try {
-        const { data } = await api.post("/auth/verify", {});
+        // ✅ backend checks cookie automatically
+        const { data } = await api.post("/auth/verify");
 
-        setIsAuth(data.status);
+        setIsAuth(data.status); // true or false
       } catch (err) {
         setIsAuth(false);
       }
     };
 
     verify();
-  }, [cookies.token]); // ✅ IMPORTANT
+  }, []);
 
+  // ⏳ While checking
   if (isAuth === null) {
     return <h3 style={{ textAlign: "center" }}>Checking auth...</h3>;
   }
 
+  // ❌ Not logged in
   if (!isAuth) {
     return <Navigate to="/login" replace />;
   }
 
+  // ✅ Logged in
   return children;
 }
