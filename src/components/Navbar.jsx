@@ -1,15 +1,23 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import api from "../lib/api";
 
 function Navbar() {
   const navigate = useNavigate();
   const [cookies, , removeCookie] = useCookies(["token"]);
 
-const handleLogout = () => {
-  localStorage.removeItem("isAuth");
-  navigate("/login");
-};
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout", {});
+    } catch (error) {
+      console.log("Logout endpoint unavailable, clearing client session only.", error);
+    } finally {
+      removeCookie("token", { path: "/" });
+      localStorage.removeItem("isAuth");
+      navigate("/login", { replace: true });
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg sticky-top main-navbar">
@@ -57,7 +65,7 @@ const handleLogout = () => {
               Host Your Stay
             </Link>
 
-            {localStorage.getItem("isAuth") && (
+            {(cookies.token || localStorage.getItem("isAuth")) && (
               <button className="btn btn-pill btn-logout" onClick={handleLogout}>
                 Logout
               </button>
