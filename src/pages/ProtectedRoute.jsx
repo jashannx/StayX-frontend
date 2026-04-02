@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import api from "../lib/api";
 
 export default function ProtectedRoute({ children }) {
   const [isAuth, setIsAuth] = useState(null);
 
   useEffect(() => {
-    setIsAuth(Boolean(localStorage.getItem("isAuth")));
+    const verifyAuth = async () => {
+      try {
+        const { data } = await api.get("/auth/verify");
+        setIsAuth(Boolean(data?.success));
+      } catch (error) {
+        setIsAuth(false);
+      }
+    };
+
+    verifyAuth();
   }, []);
 
   if (isAuth === null) {

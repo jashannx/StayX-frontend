@@ -27,7 +27,6 @@ const Login = () => {
 
       if (success) {
         toast.success(message);
-        localStorage.setItem("isAuth", "true");
 
         setTimeout(() => {
           navigate("/listings", { replace: true });

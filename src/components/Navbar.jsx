@@ -1,13 +1,34 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import api from "../lib/api";
 
 function Navbar() {
   const navigate = useNavigate();
-  const isAuthenticated = Boolean(localStorage.getItem("isAuth"));
+  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuth");
-    navigate("/login", { replace: true });
+  useEffect(() => {
+    const verifyAuth = async () => {
+      try {
+        const { data } = await api.get("/auth/verify");
+        setIsAuthenticated(Boolean(data?.success));
+      } catch (error) {
+        setIsAuthenticated(false);
+      }
+    };
+
+    verifyAuth();
+  }, [location.pathname]);
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsAuthenticated(false);
+      navigate("/login", { replace: true });
+    }
   };
 
   return (
