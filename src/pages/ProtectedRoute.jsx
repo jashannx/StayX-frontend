@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
     const verifyAuth = async () => {
       try {
         const { data } = await api.get("/auth/verify");
-        setIsAuth(Boolean(data?.success));
+        setIsAuth(data.status);
       } catch (error) {
         setIsAuth(false);
       }

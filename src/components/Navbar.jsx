@@ -11,7 +11,8 @@ function Navbar() {
     const verifyAuth = async () => {
       try {
         const { data } = await api.get("/auth/verify");
-        setIsAuthenticated(Boolean(data?.success));
+        console.log(data);
+        setIsAuthenticated(data.status===true);
       } catch (error) {
         setIsAuthenticated(false);
       }

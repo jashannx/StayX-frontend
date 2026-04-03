@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import api from "../lib/api";
-
 const Login = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
@@ -22,22 +21,19 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await api.post("/auth/login", inputValue);
+      const { data } = await api.post("/auth/login", inputValue, {
+        withCredentials: true,
+      });
       const { success, message } = data;
 
       if (success) {
-        toast.success(message);
-
-        setTimeout(() => {
-          navigate("/listings", { replace: true });
-        }, 1000);
+        navigate("/listings");
       } else {
-        toast.error(message);
+        toast.error(message || "Login failed");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
-    }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "An error occurred during login");
+    };
 
     setInputValue({
       email: "",
